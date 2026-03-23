@@ -33,19 +33,19 @@
   --bg: #FFFFFF;
   --bg-alt: #F1F5F9;
   --bg-card: #FFFFFF;
-  --bg-hero: linear-gradient(145deg, #071B33 0%, #0E2D52 45%, #164178 100%);
-  --pill-bg: rgba(255,255,255,0.06);
-  --pill-bd: rgba(255,255,255,0.08);
+  --bg-hero: linear-gradient(145deg, #061727 0%, #0B2545 40%, #13407A 100%);
+  --pill-bg: rgba(255,255,255,0.05);
+  --pill-bd: rgba(14,165,233,0.15);
 
   --pri: #0A2647;
   --pri-mid: #144272;
   --pri-light: #1E5090;
-  --acc: #0284C7;
+  --acc: #0EA5E9;
   --acc-soft: #E0F2FE;
-  --acc-muted: #38BDF8;
+  --acc-muted: #7DD3FC;
 
   --tx: #0F172A;
-  --tx-body: #334155;
+  --tx-body: #1E293B;
   --tx-muted: #64748B;
   --tx-light: #94A3B8;
   --bd: #E2E8F0;
@@ -53,9 +53,9 @@
   --nav-bg: rgba(255,255,255,0.96);
   --nav-tx: #0A2647;
 
-  --tag-bg: rgba(2,132,199,0.06);
-  --tag-bd: rgba(2,132,199,0.16);
-  --tag-tx: #0369A1;
+  --tag-bg: rgba(14,165,233,0.08);
+  --tag-bd: rgba(14,165,233,0.2);
+  --tag-tx: #0284C7;
 
   /* Spacing scale */
   --s-xs: 4px; --s-sm: 8px; --s-md: 16px; --s-lg: 24px; --s-xl: 40px; --s-2xl: 64px;
@@ -65,7 +65,7 @@
   --bg: #0B1121;
   --bg-alt: #131C2E;
   --bg-card: #162032;
-  --bg-hero: linear-gradient(145deg, #060D1A 0%, #0B1628 45%, #111F38 100%);
+  --bg-hero: linear-gradient(145deg, #050C18 0%, #091428 40%, #0F2850 100%);
   --pill-bg: rgba(255,255,255,0.035);
   --pill-bd: rgba(255,255,255,0.05);
 
@@ -77,7 +77,7 @@
   --acc-muted: #0EA5E9;
 
   --tx: #F1F5F9;
-  --tx-body: #CBD5E1;
+  --tx-body: #E2E8F0;
   --tx-muted: #64748B;
   --tx-light: #475569;
   --bd: #1E293B;
@@ -171,15 +171,45 @@ a:hover { color: var(--acc-muted); }
    HERO
    ═══════════════════════════════════════════ */
 .hero {
-  padding: 100px var(--s-lg) 44px; background: var(--bg-hero);
+  padding: 100px var(--s-lg) 44px;
+  background: var(--bg-hero);
   color: #fff; text-align: center;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 20% 50%, rgba(14,165,233,.12) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 350px at 80% 30%, rgba(59,130,246,.08) 0%, transparent 70%);
+  animation: heroShift 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes heroShift {
+  0%   { opacity: .6; transform: translateX(-8%) scale(1); }
+  50%  { opacity: 1;  transform: translateX(4%) scale(1.05); }
+  100% { opacity: .7; transform: translateX(8%) scale(1.02); }
+}
+.hero-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; opacity: .35;
 }
 .hero h1 {
   font: 700 clamp(28px, 5vw, 38px)/1.12 var(--ff-display);
   letter-spacing: 1.5px;
+  text-shadow: 0 2px 20px rgba(14,165,233,.15);
+  position: relative;
 }
-.hero-rule { width: 44px; height: 2.5px; background: var(--acc); margin: 14px auto; border-radius: 2px; }
-.hero-sub { font-size: 15px; font-weight: 300; opacity: .82; letter-spacing: .4px; }
+.hero-rule {
+  width: 44px; height: 2.5px; margin: 14px auto; border-radius: 2px;
+  background: linear-gradient(90deg, var(--acc), #7DD3FC);
+  box-shadow: 0 0 12px rgba(14,165,233,.4), 0 0 24px rgba(14,165,233,.15);
+  animation: ruleGlow 3s ease-in-out infinite alternate;
+}
+@keyframes ruleGlow {
+  0%   { box-shadow: 0 0 8px rgba(14,165,233,.3),  0 0 18px rgba(14,165,233,.1);  width: 44px; }
+  100% { box-shadow: 0 0 16px rgba(14,165,233,.5), 0 0 32px rgba(14,165,233,.2); width: 56px; }
+}
+.hero-sub { font-size: 15px; font-weight: 300; opacity: .88; letter-spacing: .4px; text-shadow: 0 1px 8px rgba(0,0,0,.2); }
 .hero-org { font-size: 12px; opacity: .45; margin-top: 6px; }
 .hero > * { max-width: 1040px; margin-left: auto; margin-right: auto; width: 100%; }
 .hero-pills { display: flex; justify-content: center; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
@@ -212,7 +242,7 @@ section { padding-top: var(--s-xl); padding-bottom: var(--s-md); }
 }
 .st::before {
   content: ''; display: block; width: 3.5px; height: 22px;
-  background: var(--acc); border-radius: 2px; flex-shrink: 0;
+  background: linear-gradient(180deg, var(--acc), var(--pri-light)); border-radius: 2px; flex-shrink: 0;
 }
 
 /* ═══════════════════════════════════════════
@@ -231,7 +261,7 @@ section { padding-top: var(--s-xl); padding-bottom: var(--s-md); }
    PROFILE
    ═══════════════════════════════════════════ */
 .profile {
-  font-size: 15px; line-height: 1.8; color: var(--tx-body);
+  font-size: 15px; line-height: 1.85; color: var(--tx-body); letter-spacing: .01em;
   text-align: justify; max-width: 880px;
 }
 
@@ -258,7 +288,7 @@ section { padding-top: var(--s-xl); padding-bottom: var(--s-md); }
 }
 .proj-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(10,38,71,.07);
+  box-shadow: 0 6px 20px rgba(14,165,233,.08), 0 12px 32px rgba(10,38,71,.06);
   border-color: var(--acc);
 }
 [data-theme="dark"] .proj-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.25); }
@@ -277,7 +307,7 @@ section { padding-top: var(--s-xl); padding-bottom: var(--s-md); }
 .proj-badge {
   position: absolute; top: 12px; right: 12px;
   font: 700 8.5px/1 var(--ff-body); color: #fff;
-  background: var(--acc); padding: 3px 8px; border-radius: 4px;
+  background: linear-gradient(135deg, #0EA5E9, #3B82F6); padding: 3px 8px; border-radius: 4px;
 }
 
 /* ═══════════════════════════════════════════
@@ -305,7 +335,7 @@ section { padding-top: var(--s-xl); padding-bottom: var(--s-md); }
   background: var(--pri); border: 2.5px solid var(--bg);
   transition: background .35s, border-color .35s;
 }
-.exp-current .exp-dot { background: var(--acc); }
+.exp-current .exp-dot { background: var(--acc); box-shadow: 0 0 0 3px rgba(14,165,233,.2); }
 .exp h3 { font: 700 15.5px/1.25 var(--ff-display); color: var(--pri); }
 .exp-org { font: 600 12.5px/1.4 var(--ff-body); color: var(--acc); margin-top: 2px; }
 .exp-sec { font: italic 400 11.5px/1.3 var(--ff-body); color: var(--tx-muted); }
@@ -402,7 +432,7 @@ section { padding-top: var(--s-xl); padding-bottom: var(--s-md); }
 .lang-bar { height: 5px; background: var(--bg-alt); border-radius: 3px; overflow: hidden; }
 .lang-fill {
   height: 100%; border-radius: 3px;
-  background: linear-gradient(90deg, var(--acc), var(--pri-light));
+  background: linear-gradient(90deg, #0EA5E9, #3B82F6, #1E5090);
   transition: width .8s ease;
 }
 
@@ -431,7 +461,7 @@ section { padding-top: var(--s-xl); padding-bottom: var(--s-md); }
    FOOTER
    ═══════════════════════════════════════════ */
 footer {
-  background: #0A2647; color: rgba(255,255,255,.6);
+  background: linear-gradient(180deg, #0B2545, #071B33); color: rgba(255,255,255,.65);
   padding: 28px var(--s-lg); text-align: center;
   font: 400 12px/1.8 var(--ff-body);
 }
@@ -446,7 +476,8 @@ footer .copy { margin-top: 12px; font-size: 10.5px; opacity: .35; }
    PRINT
    ═══════════════════════════════════════════ */
 @media print {
-  .nav, .nav-mobile-menu, footer, .nav-icon-btn, .nav-print, .nav-hamburger { display: none !important; }
+  .nav, .nav-mobile-menu, footer, .nav-icon-btn, .nav-print, .nav-hamburger, .hero-canvas { display: none !important; }
+  .hero::before { display: none; }
   .hero { padding-top: 24px !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   body { font-size: 11px; }
   .wrap { max-width: 100%; padding: 0 16px; }
@@ -549,6 +580,9 @@ footer .copy { margin-top: 12px; font-size: 10.5px; opacity: .35; }
   html { scroll-behavior: auto; }
   .reveal { transition: none; opacity: 1; transform: none; }
   .proj-card { transition: none; }
+  .hero::before { animation: none; opacity: .5; }
+  .hero-rule { animation: none; }
+  .hero-canvas { display: none; }
 }
 </style>
 </head>
@@ -594,6 +628,7 @@ footer .copy { margin-top: 12px; font-size: 10.5px; opacity: .35; }
 
 <!-- ═══ HERO ═══ -->
 <header class="hero">
+  <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
   <div class="reveal">
     <h1>WILSON MALAFAIA PEIXOTO</h1>
     <div class="hero-rule"></div>
@@ -892,6 +927,76 @@ const secObs = new IntersectionObserver(es => {
   });
 }, { threshold: 0.12, rootMargin: '-56px 0px -55% 0px' });
 document.querySelectorAll('[data-section]').forEach(el => secObs.observe(el));
+
+// ── Network particles (hero only) ──
+(function() {
+  var c = document.getElementById('heroCanvas');
+  if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var ctx = c.getContext('2d');
+  var w, h, pts = [], maxPts, raf = null;
+  var CONNECT = 120, SPEED = 0.18;
+
+  function resize() {
+    var r = window.devicePixelRatio || 1;
+    var rect = c.parentElement.getBoundingClientRect();
+    w = rect.width; h = rect.height;
+    c.width = w * r; c.height = h * r;
+    c.style.width = w + 'px'; c.style.height = h + 'px';
+    ctx.setTransform(r, 0, 0, r, 0, 0);
+    maxPts = Math.min(Math.floor((w * h) / 12000), 80);
+    while (pts.length < maxPts) pts.push(mkPt());
+    if (pts.length > maxPts) pts.length = maxPts;
+  }
+
+  function mkPt() {
+    return {
+      x: Math.random() * (w || 400),
+      y: Math.random() * (h || 400),
+      vx: (Math.random() - 0.5) * SPEED,
+      vy: (Math.random() - 0.5) * SPEED,
+      r: Math.random() * 1.2 + 0.6
+    };
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(125,211,252,0.5)';
+      ctx.fill();
+
+      for (var j = i + 1; j < pts.length; j++) {
+        var q = pts[j];
+        var dx = p.x - q.x, dy = p.y - q.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CONNECT) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = 'rgba(125,211,252,' + (0.18 * (1 - dist / CONNECT)) + ')';
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    raf = requestAnimationFrame(draw);
+  }
+
+  var heroObs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) { if (!raf) draw(); }
+    else { cancelAnimationFrame(raf); raf = null; }
+  }, { threshold: 0 });
+
+  resize();
+  heroObs.observe(c.parentElement);
+  window.addEventListener('resize', resize);
+})();
 </script>
 </body>
 </html>
